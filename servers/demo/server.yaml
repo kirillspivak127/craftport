@@ -1,0 +1,16 @@
+id: demo
+name: demo
+host: main
+port: 25565
+minecraft: 1.21.1
+loader:
+  type: fabric
+  version:
+memory: 4G
+motd: motd
+maxPlayers: 3
+whitelist: []
+ops: []
+mods: []
+serverProperties: 
+  online-mode: true
