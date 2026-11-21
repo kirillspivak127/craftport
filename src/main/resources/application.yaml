@@ -1,6 +1,16 @@
 spring:
   application:
     name: craftport
+  config:
+    import: optional:file:deploy/.env[.properties]
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
 
 server:
   port: 8080
