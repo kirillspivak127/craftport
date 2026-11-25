@@ -7,7 +7,9 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import dev.craftport.app.DeploymentInProgressException;
 import dev.craftport.app.ServerNotFoundException;
+import dev.craftport.runtime.DockerException;
 import dev.craftport.store.ServerConfigException;
 
 @RestControllerAdvice
@@ -32,6 +34,26 @@ public class ApiExceptionHandler {
 
         var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, detailMessage);
         problemDetail.setTitle("Server configuration error");
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(DeploymentInProgressException.class)
+    public ProblemDetail handleDeploymentInProgressException(DeploymentInProgressException e) {
+        log.warn("deployment in progress: {}", e.getMessage());
+
+        var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
+        problemDetail.setTitle("Deployment in progress");
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(DockerException.class)
+    public ProblemDetail handleDockerException(DockerException e) {
+        log.error("docker error", e);
+
+        var problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        problemDetail.setTitle("Deployment failed");
 
         return problemDetail;
     }
