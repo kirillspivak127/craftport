@@ -10,5 +10,7 @@ services:
       TYPE: FABRIC
       VERSION: "1.21.1"
       MEMORY: 6G
+      WHITELIST: "Notch,Herobrine"
+      OPS: "Notch"
     volumes:
       - ../data:/data
