@@ -38,6 +38,7 @@ build/
 
 ### Servers data ###
 /servers/*/data/
+/servers/*/artifacts/
 
 ### Vaadin generated frontend ###
 /src/main/frontend/generated/
